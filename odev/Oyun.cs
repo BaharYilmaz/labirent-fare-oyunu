@@ -10,28 +10,34 @@ using System.Windows.Forms;
 
 namespace odev
 {
-    public partial class Form1 : Form
+    public partial class Oyun : Form
     {
-        Image imgYol = Image.FromFile(@"C: \Users\BHR\source\repos\odev\odev\resources\yol_.jpg");
-        Image imgLabirent = Image.FromFile(@"C:\Users\BHR\source\repos\odev\odev\resources\maze_.jpg");
-        Image imgFare1 = Image.FromFile(@"C:\Users\BHR\source\repos\odev\odev\resources\mice1.png");
-        Image imgFare2 = Image.FromFile(@"C:\Users\BHR\source\repos\odev\odev\resources\mice2.png");
-        Image imgPeynir = Image.FromFile(@"C:\Users\BHR\source\repos\odev\odev\resources\cheese.png");
-        
-        int fareX;
-        int fareY;
-        
-        public Form1()
+        Image imgYol = Image.FromFile(@"C:\Users\ZİŞAN\Documents\GitHub\odev\odev\resources\maze_.jpg");
+        Image imgLabirent = Image.FromFile(@"C:\Users\ZİŞAN\Documents\GitHub\odev\odev\resources\yol_.jpg");
+        Image imgFare1 = Image.FromFile(@"C:\Users\ZİŞAN\Documents\GitHub\odev\odev\resources\mice1.png");
+        Image imgFare2 = Image.FromFile(@"C:\Users\ZİŞAN\Documents\GitHub\odev\odev\resources\mice2.png");
+        Image imgPeynir = Image.FromFile(@"C:\Users\ZİŞAN\Documents\GitHub\odev\odev\resources\cheese.png");
+
+        int OyunModu = 5;
+       
+        private void Oyun_Load(object sender, EventArgs e)
+        {
+            dgv_olustur();
+            //timer_labirent.Interval = 200;
+            
+        }
+        public Oyun()
         {
             InitializeComponent();
         }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            dgv_olustur();
-            timer_labirent.Interval = 200;
-
-        }
+        
+        int fareX;
+        int fareY;
+        int kuzey = 0;
+        int guney = 0;
+        int bati = 0;
+        int dogu = 0;
+        int hucredegeri = 0;
 
         public void dgv_olustur()
         {
@@ -46,14 +52,12 @@ namespace odev
 
             }
             dgv_labirent.Rows.Add(12);
-           
+
             dgv_labirent.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             foreach (DataGridViewRow dgvRow in dgv_labirent.Rows)
             {
                 dgvRow.Height = dgv_labirent.Columns[0].Width;
             }
-
-           
             labirentOlustur();
 
         }
@@ -117,43 +121,29 @@ namespace odev
             dgv_labirent[9, 6].Value = imgLabirent; dgv_labirent[9, 6].Tag = 100;
             dgv_labirent[10, 6].Value = imgLabirent; dgv_labirent[10, 6].Tag = 100;
 
-            dgv_labirent[10, 10].Value = imgFare1; dgv_labirent[10, 10].Tag = 10;//fare tag 10
+            dgv_labirent[10, 10].Value = imgFare1;
+            dgv_labirent[10, 10].Tag = 10;//fare tag 10
             fareX = 10;
             fareY = 10;
-
-
-        
-    }
-
-        private void btn_basla_Click(object sender, EventArgs e)
-        {
-            btn_basla.Enabled = false;
-            timer_labirent.Enabled = true;
-            timer_labirent.Start();
         }
 
         public int fareBul()
         {
-            int kuzey = 0;
-            int guney = 0;
-            int bati = 0;
-            int dogu = 0;
-            int hucredegeri = 0;
             DataGridViewImageCell yeniFareKonum = new DataGridViewImageCell();
             yeniFareKonum.ImageLayout = DataGridViewImageCellLayout.Stretch;
             yeniFareKonum.Value = imgFare1;
-            
+
             kuzey = Convert.ToInt32(dgv_labirent.Rows[fareY - 1].Cells[fareX].Tag);
             guney = Convert.ToInt32(dgv_labirent.Rows[fareY + 1].Cells[fareX].Tag);
             bati = Convert.ToInt32(dgv_labirent.Rows[fareY].Cells[fareX - 1].Tag);
             dogu = Convert.ToInt32(dgv_labirent.Rows[fareY].Cells[fareX + 1].Tag);
 
-            if(kuzey<=bati && kuzey<=dogu &&kuzey<=guney )
+            if (kuzey <= bati && kuzey <= dogu && kuzey <= guney)
             {
-                if(kuzey!=100)//duvar
+                if (kuzey != 100)//duvar
                 {
                     hucredegeri = kuzey;
-                    if(kuzey==0)//peynir
+                    if (kuzey == 0)//peynir
                     {
                         timer_labirent.Stop();
                         timer_labirent.Enabled = false;
@@ -165,7 +155,7 @@ namespace odev
                     dgv_labirent.Rows[fareY].Cells[fareX].Value = imgYol; //eski fare konumuna yok eklenir
                     fareY--;
                 }
-               
+
             }
             else if (bati <= kuzey && bati <= dogu & bati <= guney)
             {
@@ -205,7 +195,7 @@ namespace odev
             }
             else if (dogu <= kuzey && dogu <= bati && dogu <= guney)
             {
-                if (dogu != 100 )
+                if (dogu != 100)
                 {
                     hucredegeri = dogu;
                     if (dogu == 0)
@@ -225,20 +215,108 @@ namespace odev
 
         }
 
-        public void fareBulManuel()
-        { }
+        private void Oyna(object sender, KeyEventArgs e)
+        { 
+            if (this.OyunModu == 1)
+            {
+                if (e.KeyData == Keys.Right && (int)dgv_labirent[fareX + 1, fareY].Tag != 100)
+                {
+                    if (e.KeyData == Keys.Right && (int)dgv_labirent[fareX, fareY + 1].Tag == 0)
+                    {
+                        dgv_labirent[fareX, fareY].Value = null;
+                        dgv_labirent[fareX, fareY].Value = imgYol;
+                        dgv_labirent[++fareX, fareY].Value = imgFare1;
+                        MessageBox.Show("PEYNİR BULUNDU!");
+                    }
+                    else
+                    {
+                        dgv_labirent[fareX, fareY].Value = null;
+                        dgv_labirent[fareX, fareY].Value = imgYol;
+                        dgv_labirent[++fareX, fareY].Value = imgFare1;
+                    }
 
-        public void fareBulCiftKisi()
-        { }
+                }
+                if (e.KeyData == Keys.Left && (int)dgv_labirent[fareX - 1, fareY].Tag != 100)
+                {
+                    if (e.KeyData == Keys.Left && (int)dgv_labirent[fareX - 1, fareY].Tag == 0)
+                    {
+                        dgv_labirent[fareX, fareY].Value = null;
+                        dgv_labirent[fareX, fareY].Value = imgYol;
+                        dgv_labirent[--fareX, fareY].Value = imgFare1;
+                        MessageBox.Show("PEYNİR BULUNDU!");
+                    }
+                    else
+                    {
+                        dgv_labirent[fareX, fareY].Value = null;
+                        dgv_labirent[fareX, fareY].Value = imgYol;
+                        dgv_labirent[++fareX, fareY].Value = imgFare1;
+                    }
+                }
+
+                if (e.KeyData == Keys.Up && (int)dgv_labirent[fareX, fareY - 1].Tag != 100)
+                {
+                    if (e.KeyData == Keys.Up && (int)dgv_labirent[fareX, fareY - 1].Tag == 0)
+                    {
+                        dgv_labirent[fareX, fareY].Value = null;
+                        dgv_labirent[fareX, fareY].Value = imgYol;
+                        dgv_labirent[fareX, --fareY].Value = imgFare1;
+                        MessageBox.Show("PEYNİR BULUNDU!");
+                    }
+                    else
+                    {
+                        dgv_labirent[fareX, fareY].Value = null;
+                        dgv_labirent[fareX, fareY].Value = imgYol;
+                        dgv_labirent[fareX, --fareY].Value = imgFare1;
+                    }
+                }
+
+                if (e.KeyData == Keys.Down && (int)dgv_labirent[fareX, fareY + 1].Tag != 100)
+                {
+                    if (e.KeyData == Keys.Down && (int)dgv_labirent[fareX, fareY + 1].Tag == 0)
+                    {
+                        dgv_labirent[fareX, fareY].Value = null;
+                        dgv_labirent[fareX, fareY].Value = imgYol;
+                        dgv_labirent[fareX, ++fareY].Value = imgFare1;
+                        MessageBox.Show("PEYNİR BULUNDU!");
+                    }
+                    else
+                    {
+                        dgv_labirent[fareX, fareY].Value = null;
+                        dgv_labirent[fareX, fareY].Value = imgYol;
+                        dgv_labirent[fareX, ++fareY].Value = imgFare1;
+
+                    }
+                }
+            }
+        }
 
         private void timer_labirent_Tick(object sender, EventArgs e)
         {
-            int returnValue = fareBul();
-            if(returnValue==1)
+            int valuable=fareBul();
+            if(valuable==1)
             {
-                MessageBox.Show("PEYNİR BULUNDU!");
-            }
+                MessageBox.Show("Pendir Bulundu");
 
+                dgv_labirent[10, 10].Value = imgFare1;
+                dgv_labirent[10, 10].Tag = 10;//fare tag 10
+                fareX = 10;
+                fareY = 10;
+
+            }
+        }
+
+        private void btn_basla_Click(object sender, EventArgs e)
+        {
+            timer_labirent.Enabled = true;
+            timer_labirent.Start();
+            this.OyunModu = 0;
+            label2.Text = OyunModu.ToString();
+        }
+ 
+        private void btn_tekKisiOyna_Click(object sender, EventArgs e)
+        {
+            this.OyunModu = 1;
+            label2.Text = OyunModu.ToString();
         }
     }
 }

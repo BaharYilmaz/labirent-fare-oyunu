@@ -152,7 +152,7 @@ namespace odev
                     hucredegeri++;
                     yeniFareKonum.Tag = hucredegeri;
                     dgv_labirent.Rows[fareY - 1].Cells[fareX] = yeniFareKonum;
-                    dgv_labirent.Rows[fareY].Cells[fareX].Value = imgYol; //eski fare konumuna yok eklenir
+                    dgv_labirent.Rows[fareY].Cells[fareX].Value = imgYol; //eski fare konumuna yol eklenir
                     fareY--;
                 }
 
@@ -296,12 +296,11 @@ namespace odev
             if(valuable==1)
             {
                 MessageBox.Show("Pendir Bulundu");
-
+                dgv_labirent.Rows[fareY].Cells[fareX].Value = imgYol;//fare eski konumuna yol eklenir
                 dgv_labirent[10, 10].Value = imgFare1;
                 dgv_labirent[10, 10].Tag = 10;//fare tag 10
                 fareX = 10;
                 fareY = 10;
-
             }
         }
 
@@ -317,6 +316,9 @@ namespace odev
         {
             this.OyunModu = 1;
             label2.Text = OyunModu.ToString();
+                       
         }
+
+        
     }
 }

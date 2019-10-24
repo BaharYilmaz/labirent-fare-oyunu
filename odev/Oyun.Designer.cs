@@ -53,14 +53,15 @@
             this.dgv_labirent.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.dgv_labirent.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dgv_labirent.Size = new System.Drawing.Size(620, 573);
-            this.dgv_labirent.TabIndex = 1;
+            this.dgv_labirent.TabIndex = 0;
+            this.dgv_labirent.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TekKisiOyna);
             // 
             // btn_basla
             // 
             this.btn_basla.Location = new System.Drawing.Point(661, 115);
             this.btn_basla.Name = "btn_basla";
             this.btn_basla.Size = new System.Drawing.Size(183, 69);
-            this.btn_basla.TabIndex = 2;
+            this.btn_basla.TabIndex = 6;
             this.btn_basla.Text = "BAŞLA";
             this.btn_basla.UseVisualStyleBackColor = true;
             this.btn_basla.Click += new System.EventHandler(this.btn_basla_Click);
@@ -74,7 +75,7 @@
             this.btn_tekKisiOyna.Location = new System.Drawing.Point(661, 220);
             this.btn_tekKisiOyna.Name = "btn_tekKisiOyna";
             this.btn_tekKisiOyna.Size = new System.Drawing.Size(183, 69);
-            this.btn_tekKisiOyna.TabIndex = 4;
+            this.btn_tekKisiOyna.TabIndex = 1;
             this.btn_tekKisiOyna.Text = "Tek Kişi Oyna";
             this.btn_tekKisiOyna.UseVisualStyleBackColor = true;
             this.btn_tekKisiOyna.Click += new System.EventHandler(this.btn_tekKisiOyna_Click);
@@ -85,7 +86,7 @@
             this.label2.Location = new System.Drawing.Point(658, 29);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(46, 17);
-            this.label2.TabIndex = 6;
+            this.label2.TabIndex = 7;
             this.label2.Text = "label2";
             // 
             // Oyun

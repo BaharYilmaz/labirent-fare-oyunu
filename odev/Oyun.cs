@@ -12,18 +12,18 @@ namespace odev
 {
     public partial class Oyun : Form
     {
-        Image imgYol = Image.FromFile(@"C:\Users\ZİŞAN\Documents\GitHub\odev\odev\resources\maze_.jpg");
-        Image imgLabirent = Image.FromFile(@"C:\Users\ZİŞAN\Documents\GitHub\odev\odev\resources\yol_.jpg");
-        Image imgFare1 = Image.FromFile(@"C:\Users\ZİŞAN\Documents\GitHub\odev\odev\resources\mice1.png");
-        Image imgFare2 = Image.FromFile(@"C:\Users\ZİŞAN\Documents\GitHub\odev\odev\resources\mice2.png");
-        Image imgPeynir = Image.FromFile(@"C:\Users\ZİŞAN\Documents\GitHub\odev\odev\resources\cheese.png");
+        Image imgYol = Image.FromFile(@"C:\Users\BHR\source\repos\odev\odev\resources\yol_.jpg");
+        Image imgLabirent = Image.FromFile(@"C:\Users\BHR\source\repos\odev\odev\resources\maze_.jpg");
+        Image imgFare1 = Image.FromFile(@"C:\Users\BHR\source\repos\odev\odev\resources\mice1.png");
+        Image imgFare2 = Image.FromFile(@"C:\Users\BHR\source\repos\odev\odev\resources\mice2.png");
+        Image imgPeynir = Image.FromFile(@"C:\Users\BHR\source\repos\odev\odev\resources\cheese.png");
 
         int OyunModu = 5;
        
         private void Oyun_Load(object sender, EventArgs e)
         {
             dgv_olustur();
-            //timer_labirent.Interval = 200;
+            timer_labirent.Interval = 200;
             
         }
         public Oyun()
@@ -217,11 +217,46 @@ namespace odev
 
         private void Oyna(object sender, KeyEventArgs e)
         { 
+           
+        }
+
+        private void timer_labirent_Tick(object sender, EventArgs e)
+        {
+            int valuable=fareBul();
+            if(valuable==1)
+            {
+                MessageBox.Show("Pendir Bulundu");
+                dgv_labirent.Rows[fareY].Cells[fareX].Value = imgYol;//fare eski konumuna yol eklenir
+                dgv_labirent[10, 10].Value = imgFare1;
+                dgv_labirent[10, 10].Tag = 10;//fare tag 10
+                fareX = 10;
+                fareY = 10;
+            }
+        }
+
+        private void btn_basla_Click(object sender, EventArgs e)
+        {
+            timer_labirent.Enabled = true;
+            timer_labirent.Start();
+            this.OyunModu = 0;
+            label2.Text = OyunModu.ToString();
+        }
+ 
+        private void btn_tekKisiOyna_Click(object sender, EventArgs e)
+        {
+            this.OyunModu = 1;
+            label2.Text = OyunModu.ToString();
+          //  TekKisiOyna();
+                       
+        }
+
+        private void TekKisiOyna(object sender, KeyEventArgs e)
+        {
             if (this.OyunModu == 1)
             {
                 if (e.KeyData == Keys.Right && (int)dgv_labirent[fareX + 1, fareY].Tag != 100)
                 {
-                    if (e.KeyData == Keys.Right && (int)dgv_labirent[fareX, fareY + 1].Tag == 0)
+                    if (e.KeyData == Keys.Right && (int)dgv_labirent[fareX+1, fareY].Tag == 0)
                     {
                         dgv_labirent[fareX, fareY].Value = null;
                         dgv_labirent[fareX, fareY].Value = imgYol;
@@ -249,7 +284,7 @@ namespace odev
                     {
                         dgv_labirent[fareX, fareY].Value = null;
                         dgv_labirent[fareX, fareY].Value = imgYol;
-                        dgv_labirent[++fareX, fareY].Value = imgFare1;
+                        dgv_labirent[--fareX, fareY].Value = imgFare1;
                     }
                 }
 
@@ -289,36 +324,5 @@ namespace odev
                 }
             }
         }
-
-        private void timer_labirent_Tick(object sender, EventArgs e)
-        {
-            int valuable=fareBul();
-            if(valuable==1)
-            {
-                MessageBox.Show("Pendir Bulundu");
-                dgv_labirent.Rows[fareY].Cells[fareX].Value = imgYol;//fare eski konumuna yol eklenir
-                dgv_labirent[10, 10].Value = imgFare1;
-                dgv_labirent[10, 10].Tag = 10;//fare tag 10
-                fareX = 10;
-                fareY = 10;
-            }
-        }
-
-        private void btn_basla_Click(object sender, EventArgs e)
-        {
-            timer_labirent.Enabled = true;
-            timer_labirent.Start();
-            this.OyunModu = 0;
-            label2.Text = OyunModu.ToString();
-        }
- 
-        private void btn_tekKisiOyna_Click(object sender, EventArgs e)
-        {
-            this.OyunModu = 1;
-            label2.Text = OyunModu.ToString();
-                       
-        }
-
-        
     }
 }

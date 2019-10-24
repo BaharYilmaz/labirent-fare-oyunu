@@ -12,11 +12,11 @@ namespace odev
 {
     public partial class Oyun : Form
     {
-        Image imgYol = Image.FromFile(@"C:\Users\BHR\source\repos\odev\odev\resources\yol_.jpg");
-        Image imgLabirent = Image.FromFile(@"C:\Users\BHR\source\repos\odev\odev\resources\maze_.jpg");
-        Image imgFare1 = Image.FromFile(@"C:\Users\BHR\source\repos\odev\odev\resources\mice1.png");
-        Image imgFare2 = Image.FromFile(@"C:\Users\BHR\source\repos\odev\odev\resources\mice2.png");
-        Image imgPeynir = Image.FromFile(@"C:\Users\BHR\source\repos\odev\odev\resources\cheese.png");
+        Image imgYol = Image.FromFile(@"C:\Users\ZİŞAN\Documents\GitHub\odev\odev\resources\yol_.jpg");
+        Image imgLabirent = Image.FromFile(@"C:\Users\ZİŞAN\Documents\GitHub\odev\odev\resources\maze_.jpg");
+        Image imgFare1 = Image.FromFile(@"C:\Users\ZİŞAN\Documents\GitHub\odev\odev\resources\mice1.png");
+        Image imgFare2 = Image.FromFile(@"C:\Users\ZİŞAN\Documents\GitHub\odev\odev\resources\mice2.png");
+        Image imgPeynir = Image.FromFile(@"C:\Users\ZİŞAN\Documents\GitHub\odev\odev\resources\cheese.png");
 
         int OyunModu = 5;
        
@@ -61,6 +61,7 @@ namespace odev
             labirentOlustur();
 
         }
+
         public void labirentOlustur()
         {
             for (int i = 0; i < 12; i++)
@@ -69,13 +70,15 @@ namespace odev
                 {
                     if (dgv_labirent[i, j] != dgv_labirent[6, 7])
                     {
-                        dgv_labirent[i, j].Value = imgYol; dgv_labirent[i, j].Tag = 1;// yol tag 1
+                        dgv_labirent[i, j].Value = imgYol;
+                        dgv_labirent[i, j].Tag = 1;// yol tag 1
 
                     }
                     else
                     {
                         dgv_labirent[i, j].Value = imgYol;
-                        dgv_labirent[i, j].Value = imgPeynir; dgv_labirent[i, j].Tag = 0;//peynir tag 0
+                        dgv_labirent[i, j].Value = imgPeynir;
+                        dgv_labirent[i, j].Tag = 0;//peynir tag 0
                     }
 
                 }
@@ -215,11 +218,7 @@ namespace odev
 
         }
 
-        private void Oyna(object sender, KeyEventArgs e)
-        { 
-           
-        }
-
+        
         private void timer_labirent_Tick(object sender, EventArgs e)
         {
             int valuable=fareBul();
@@ -261,7 +260,7 @@ namespace odev
                         dgv_labirent[fareX, fareY].Value = null;
                         dgv_labirent[fareX, fareY].Value = imgYol;
                         dgv_labirent[++fareX, fareY].Value = imgFare1;
-                        MessageBox.Show("PEYNİR BULUNDU!");
+                        alert();
                     }
                     else
                     {
@@ -278,7 +277,7 @@ namespace odev
                         dgv_labirent[fareX, fareY].Value = null;
                         dgv_labirent[fareX, fareY].Value = imgYol;
                         dgv_labirent[--fareX, fareY].Value = imgFare1;
-                        MessageBox.Show("PEYNİR BULUNDU!");
+                        alert();
                     }
                     else
                     {
@@ -295,7 +294,7 @@ namespace odev
                         dgv_labirent[fareX, fareY].Value = null;
                         dgv_labirent[fareX, fareY].Value = imgYol;
                         dgv_labirent[fareX, --fareY].Value = imgFare1;
-                        MessageBox.Show("PEYNİR BULUNDU!");
+                        alert();
                     }
                     else
                     {
@@ -312,7 +311,7 @@ namespace odev
                         dgv_labirent[fareX, fareY].Value = null;
                         dgv_labirent[fareX, fareY].Value = imgYol;
                         dgv_labirent[fareX, ++fareY].Value = imgFare1;
-                        MessageBox.Show("PEYNİR BULUNDU!");
+                        alert();
                     }
                     else
                     {
@@ -324,5 +323,15 @@ namespace odev
                 }
             }
         }
+        public void alert()
+        {
+            MessageBox.Show("Pendir Bulundu");
+            dgv_labirent.Rows[fareY].Cells[fareX].Value = imgYol;//fare eski konumuna yol eklenir
+            dgv_labirent[10, 10].Value = imgFare1;
+            dgv_labirent[10, 10].Tag = 10;//fare tag 10
+            fareX = 10;
+            fareY = 10;
+        }
+
     }
 }

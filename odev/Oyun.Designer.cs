@@ -93,15 +93,16 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(869, 597);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btn_tekKisiOyna);
             this.Controls.Add(this.btn_basla);
             this.Controls.Add(this.dgv_labirent);
+            this.MaximizeBox = false;
             this.Name = "Oyun";
             this.Text = "Oyun";
             this.Load += new System.EventHandler(this.Oyun_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Oyna);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_labirent)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

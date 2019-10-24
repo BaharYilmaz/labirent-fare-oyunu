@@ -34,6 +34,8 @@
             this.timer_labirent = new System.Windows.Forms.Timer(this.components);
             this.btn_tekKisiOyna = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lblHamle = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_labirent)).BeginInit();
             this.SuspendLayout();
             // 
@@ -89,12 +91,32 @@
             this.label2.TabIndex = 7;
             this.label2.Text = "label2";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(658, 72);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(93, 17);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Hamle Sayısı:";
+            // 
+            // lblHamle
+            // 
+            this.lblHamle.AutoSize = true;
+            this.lblHamle.Location = new System.Drawing.Point(753, 72);
+            this.lblHamle.Name = "lblHamle";
+            this.lblHamle.Size = new System.Drawing.Size(16, 17);
+            this.lblHamle.TabIndex = 9;
+            this.lblHamle.Text = "0";
+            // 
             // Oyun
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(869, 597);
+            this.Controls.Add(this.lblHamle);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btn_tekKisiOyna);
             this.Controls.Add(this.btn_basla);
@@ -115,6 +137,8 @@
         private System.Windows.Forms.Timer timer_labirent;
         private System.Windows.Forms.Button btn_tekKisiOyna;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblHamle;
     }
 }
 

@@ -31,13 +31,16 @@ namespace odev
             InitializeComponent();
         }
         
-        int fareX;
-        int fareY;
+        int fareX=10;
+        int fareY=10;
+        int peynirX;
+        int peynirY;
         int kuzey = 0;
         int guney = 0;
         int bati = 0;
         int dogu = 0;
         int hucredegeri = 0;
+        int hamleSayisi = 0;
 
         public void dgv_olustur()
         {
@@ -68,23 +71,12 @@ namespace odev
             {
                 for (int j = 0; j < 12; j++)
                 {
-                    if (dgv_labirent[i, j] != dgv_labirent[6, 7])
-                    {
-                        dgv_labirent[i, j].Value = imgYol;
-                        dgv_labirent[i, j].Tag = 1;// yol tag 1
-
-                    }
-                    else
-                    {
-                        dgv_labirent[i, j].Value = imgYol;
-                        dgv_labirent[i, j].Value = imgPeynir;
-                        dgv_labirent[i, j].Tag = 0;//peynir tag 0
-                    }
-
+                    dgv_labirent[i, j].Value = imgYol;
+                    dgv_labirent[i, j].Tag = 1;// yol tag 1
                 }
 
             }
-
+            
             for (int i = 0; i < 12; i++)//üst-alt duvar
             {
                 dgv_labirent[i, 0].Value = imgLabirent; dgv_labirent[i, 0].Tag = 100;
@@ -126,8 +118,24 @@ namespace odev
 
             dgv_labirent[10, 10].Value = imgFare1;
             dgv_labirent[10, 10].Tag = 10;//fare tag 10
-            fareX = 10;
-            fareY = 10;
+            
+
+            Random rastgele = new Random();
+            
+            for (; ; )
+            {
+                peynirX = rastgele.Next(0, 12);
+                peynirY = rastgele.Next(0, 12);
+
+                if(dgv_labirent[peynirX,peynirY].Value== imgYol)
+                {
+                    dgv_labirent[peynirX, peynirY].Value = imgPeynir;
+                    dgv_labirent[peynirX, peynirY].Tag = 0;
+                    break;
+                }
+            }
+            
+            
         }
 
         public int fareBul()
@@ -157,6 +165,7 @@ namespace odev
                     dgv_labirent.Rows[fareY - 1].Cells[fareX] = yeniFareKonum;
                     dgv_labirent.Rows[fareY].Cells[fareX].Value = imgYol; //eski fare konumuna yol eklenir
                     fareY--;
+                    hamleSayisi += 1;
                 }
 
             }
@@ -176,6 +185,7 @@ namespace odev
                     dgv_labirent.Rows[fareY].Cells[fareX - 1] = yeniFareKonum;
                     dgv_labirent.Rows[fareY].Cells[fareX].Value = imgYol;
                     fareX--;
+                    hamleSayisi += 1;
                 }
             }
             else if (guney <= kuzey && guney <= bati && guney <= dogu)
@@ -194,6 +204,7 @@ namespace odev
                     dgv_labirent.Rows[fareY + 1].Cells[fareX] = yeniFareKonum;
                     dgv_labirent.Rows[fareY].Cells[fareX].Value = imgYol;
                     fareY++;
+                    hamleSayisi += 1;
                 }
             }
             else if (dogu <= kuzey && dogu <= bati && dogu <= guney)
@@ -212,24 +223,19 @@ namespace odev
                     dgv_labirent.Rows[fareY].Cells[fareX + 1] = yeniFareKonum;
                     dgv_labirent.Rows[fareY].Cells[fareX].Value = imgYol;
                     fareX++;
+                    hamleSayisi += 1;
                 }
             }
             return 0;
 
         }
 
-        
         private void timer_labirent_Tick(object sender, EventArgs e)
         {
             int valuable=fareBul();
             if(valuable==1)
             {
-                MessageBox.Show("Pendir Bulundu");
-                dgv_labirent.Rows[fareY].Cells[fareX].Value = imgYol;//fare eski konumuna yol eklenir
-                dgv_labirent[10, 10].Value = imgFare1;
-                dgv_labirent[10, 10].Tag = 10;//fare tag 10
-                fareX = 10;
-                fareY = 10;
+                alert();
             }
         }
 
@@ -237,7 +243,7 @@ namespace odev
         {
             timer_labirent.Enabled = true;
             timer_labirent.Start();
-            this.OyunModu = 0;
+            //this.OyunModu = 0;
             label2.Text = OyunModu.ToString();
         }
  
@@ -251,86 +257,111 @@ namespace odev
 
         private void TekKisiOyna(object sender, KeyEventArgs e)
         {
-            if (this.OyunModu == 1)
+            if (e.KeyData == Keys.Right && (int)dgv_labirent[fareX + 1, fareY].Tag != 100)
             {
-                if (e.KeyData == Keys.Right && (int)dgv_labirent[fareX + 1, fareY].Tag != 100)
+                if (e.KeyData == Keys.Right && (int)dgv_labirent[fareX+1, fareY].Tag == 0)
                 {
-                    if (e.KeyData == Keys.Right && (int)dgv_labirent[fareX+1, fareY].Tag == 0)
-                    {
-                        dgv_labirent[fareX, fareY].Value = null;
-                        dgv_labirent[fareX, fareY].Value = imgYol;
-                        dgv_labirent[++fareX, fareY].Value = imgFare1;
-                        alert();
-                    }
-                    else
-                    {
-                        dgv_labirent[fareX, fareY].Value = null;
-                        dgv_labirent[fareX, fareY].Value = imgYol;
-                        dgv_labirent[++fareX, fareY].Value = imgFare1;
-                    }
-
+                    hamleSayisi += 1;
+                    dgv_labirent[fareX, fareY].Value = null;
+                    dgv_labirent[fareX, fareY].Value = imgYol;
+                    dgv_labirent[++fareX, fareY].Value = imgFare1;
+                    alert();
                 }
-                if (e.KeyData == Keys.Left && (int)dgv_labirent[fareX - 1, fareY].Tag != 100)
+                else
                 {
-                    if (e.KeyData == Keys.Left && (int)dgv_labirent[fareX - 1, fareY].Tag == 0)
-                    {
-                        dgv_labirent[fareX, fareY].Value = null;
-                        dgv_labirent[fareX, fareY].Value = imgYol;
-                        dgv_labirent[--fareX, fareY].Value = imgFare1;
-                        alert();
-                    }
-                    else
-                    {
-                        dgv_labirent[fareX, fareY].Value = null;
-                        dgv_labirent[fareX, fareY].Value = imgYol;
-                        dgv_labirent[--fareX, fareY].Value = imgFare1;
-                    }
+                    hamleSayisi += 1;
+                    dgv_labirent[fareX, fareY].Value = null;
+                    dgv_labirent[fareX, fareY].Value = imgYol;
+                    dgv_labirent[++fareX, fareY].Value = imgFare1;
                 }
 
-                if (e.KeyData == Keys.Up && (int)dgv_labirent[fareX, fareY - 1].Tag != 100)
+            }
+            if (e.KeyData == Keys.Left && (int)dgv_labirent[fareX - 1, fareY].Tag != 100)
+            {
+                if (e.KeyData == Keys.Left && (int)dgv_labirent[fareX - 1, fareY].Tag == 0)
                 {
-                    if (e.KeyData == Keys.Up && (int)dgv_labirent[fareX, fareY - 1].Tag == 0)
-                    {
-                        dgv_labirent[fareX, fareY].Value = null;
-                        dgv_labirent[fareX, fareY].Value = imgYol;
-                        dgv_labirent[fareX, --fareY].Value = imgFare1;
-                        alert();
-                    }
-                    else
-                    {
-                        dgv_labirent[fareX, fareY].Value = null;
-                        dgv_labirent[fareX, fareY].Value = imgYol;
-                        dgv_labirent[fareX, --fareY].Value = imgFare1;
-                    }
+                    hamleSayisi += 1;
+                    dgv_labirent[fareX, fareY].Value = null;
+                    dgv_labirent[fareX, fareY].Value = imgYol;
+                    dgv_labirent[--fareX, fareY].Value = imgFare1;
+                    alert();
                 }
-
-                if (e.KeyData == Keys.Down && (int)dgv_labirent[fareX, fareY + 1].Tag != 100)
+                else
                 {
-                    if (e.KeyData == Keys.Down && (int)dgv_labirent[fareX, fareY + 1].Tag == 0)
-                    {
-                        dgv_labirent[fareX, fareY].Value = null;
-                        dgv_labirent[fareX, fareY].Value = imgYol;
-                        dgv_labirent[fareX, ++fareY].Value = imgFare1;
-                        alert();
-                    }
-                    else
-                    {
-                        dgv_labirent[fareX, fareY].Value = null;
-                        dgv_labirent[fareX, fareY].Value = imgYol;
-                        dgv_labirent[fareX, ++fareY].Value = imgFare1;
-
-                    }
+                    hamleSayisi += 1;
+                    dgv_labirent[fareX, fareY].Value = null;
+                    dgv_labirent[fareX, fareY].Value = imgYol;
+                    dgv_labirent[--fareX, fareY].Value = imgFare1;
                 }
             }
+
+            if (e.KeyData == Keys.Up && (int)dgv_labirent[fareX, fareY - 1].Tag != 100)
+            {
+                if (e.KeyData == Keys.Up && (int)dgv_labirent[fareX, fareY - 1].Tag == 0)
+                {
+                    hamleSayisi += 1;
+                    dgv_labirent[fareX, fareY].Value = null;
+                    dgv_labirent[fareX, fareY].Value = imgYol;
+                    dgv_labirent[fareX, --fareY].Value = imgFare1;
+                    alert();
+                }
+                else
+                {
+                    hamleSayisi += 1;
+                    dgv_labirent[fareX, fareY].Value = null;
+                    dgv_labirent[fareX, fareY].Value = imgYol;
+                    dgv_labirent[fareX, --fareY].Value = imgFare1;
+                }
+            }
+
+            if (e.KeyData == Keys.Down && (int)dgv_labirent[fareX, fareY + 1].Tag != 100)
+            {
+                if (e.KeyData == Keys.Down && (int)dgv_labirent[fareX, fareY + 1].Tag == 0)
+                {
+                    hamleSayisi += 1;
+                    dgv_labirent[fareX, fareY].Value = null;
+                    dgv_labirent[fareX, fareY].Value = imgYol;
+                    dgv_labirent[fareX, ++fareY].Value = imgFare1;
+                    alert();
+                }
+                else
+                {
+                    hamleSayisi += 1;
+                    dgv_labirent[fareX, fareY].Value = null;
+                    dgv_labirent[fareX, fareY].Value = imgYol;
+                    dgv_labirent[fareX, ++fareY].Value = imgFare1;
+
+                }
+            }
+            
         }
+
         public void alert()
         {
-            MessageBox.Show("Pendir Bulundu");
+            MessageBox.Show("Pendir " + hamleSayisi+ " hamlede bulundu.");
             dgv_labirent.Rows[fareY].Cells[fareX].Value = imgYol;//fare eski konumuna yol eklenir
             dgv_labirent[10, 10].Value = imgFare1;
             dgv_labirent[10, 10].Tag = 10;//fare tag 10
+            dgv_labirent[peynirX, peynirY].Value = imgYol;//peynirin eski konumuna yol eklendi.
+            dgv_labirent[peynirX, peynirY].Tag = 1;//yeni yola 1 atanır
             fareX = 10;
             fareY = 10;
+            lblHamle.Text = hamleSayisi.ToString();
+
+            Random rastgele = new Random();
+
+            for (; ; )
+            {
+                peynirX = rastgele.Next(0, 12);
+                peynirY = rastgele.Next(0, 12);
+
+                if (dgv_labirent[peynirX, peynirY].Value == imgYol)
+                {
+                    dgv_labirent[peynirX, peynirY].Value = imgPeynir;
+                    dgv_labirent[peynirX, peynirY].Tag = 0;
+                    break;
+                }
+            }
         }
 
     }

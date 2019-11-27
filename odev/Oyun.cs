@@ -347,6 +347,7 @@ namespace odev
             fareX = 10;
             fareY = 10;
             lblHamle.Text = hamleSayisi.ToString();
+            hamleSayisi = 0;
 
             Random rastgele = new Random();
 

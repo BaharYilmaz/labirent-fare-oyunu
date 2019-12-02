@@ -12,13 +12,18 @@ namespace odev
 {
     public partial class Oyun : Form
     {
-        Image imgYol = Image.FromFile(@"C:\Users\ZİŞAN\Documents\GitHub\odev\odev\resources\yol_.jpg");
-        Image imgLabirent = Image.FromFile(@"C:\Users\ZİŞAN\Documents\GitHub\odev\odev\resources\maze_.jpg");
-        Image imgFare1 = Image.FromFile(@"C:\Users\ZİŞAN\Documents\GitHub\odev\odev\resources\mice1.png");
-        Image imgFare2 = Image.FromFile(@"C:\Users\ZİŞAN\Documents\GitHub\odev\odev\resources\mice2.png");
-        Image imgPeynir = Image.FromFile(@"C:\Users\ZİŞAN\Documents\GitHub\odev\odev\resources\cheese.png");
+    //    Image imgYol = Image.FromFile(@"C:\Users\ZİŞAN\Documents\GitHub\odev\odev\resources\yol_.jpg");
+    //    Image imgLabirent = Image.FromFile(@"C:\Users\ZİŞAN\Documents\GitHub\odev\odev\resources\maze_.jpg");
+    //    Image imgFare1 = Image.FromFile(@"C:\Users\ZİŞAN\Documents\GitHub\odev\odev\resources\mice1.png");
+    //    Image imgFare2 = Image.FromFile(@"C:\Users\ZİŞAN\Documents\GitHub\odev\odev\resources\mice2.png");
+    //    Image imgPeynir = Image.FromFile(@"C:\Users\ZİŞAN\Documents\GitHub\odev\odev\resources\cheese.png");
+        Image imgYol = Image.FromFile(@"C:\Users\BHR\source\repos\odev\odev\resources\yol_.jpg");
+        Image imgLabirent = Image.FromFile(@"C:\Users\BHR\source\repos\odev\odev\resources\maze_.jpg");
+        Image imgFare1 = Image.FromFile(@"C:\Users\BHR\source\repos\odev\odev\resources\mice1.png");
+        Image imgFare2 = Image.FromFile(@"C:\Users\BHR\source\repos\odev\odev\resources\mice2.png");
+        Image imgPeynir = Image.FromFile(@"C:\Users\BHR\source\repos\odev\odev\resources\cheese.png");
 
-        int OyunModu = 5;
+
        
         private void Oyun_Load(object sender, EventArgs e)
         {
@@ -239,20 +244,14 @@ namespace odev
             }
         }
 
-        private void btn_basla_Click(object sender, EventArgs e)
-        {
-            timer_labirent.Enabled = true;
-            timer_labirent.Start();
-            //this.OyunModu = 0;
-            label2.Text = OyunModu.ToString();
-        }
+        
  
         private void btn_tekKisiOyna_Click(object sender, EventArgs e)
         {
-            this.OyunModu = 1;
-            label2.Text = OyunModu.ToString();
-          //  TekKisiOyna();
-                       
+          
+            lblHamle.Text = "";
+
+
         }
 
         private void TekKisiOyna(object sender, KeyEventArgs e)
@@ -338,7 +337,7 @@ namespace odev
 
         public void alert()
         {
-            MessageBox.Show("Pendir " + hamleSayisi+ " hamlede bulundu.");
+            MessageBox.Show("Peynir " + hamleSayisi+ " hamlede bulundu.");
             dgv_labirent.Rows[fareY].Cells[fareX].Value = imgYol;//fare eski konumuna yol eklenir
             dgv_labirent[10, 10].Value = imgFare1;
             dgv_labirent[10, 10].Tag = 10;//fare tag 10
@@ -365,5 +364,12 @@ namespace odev
             }
         }
 
+        private void btn_bilgisayarOyna_Click(object sender, EventArgs e)
+        {
+            timer_labirent.Enabled = true;
+            timer_labirent.Start();
+
+            lblHamle.Text = "";
+        }
     }
 }

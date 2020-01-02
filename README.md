@@ -11,11 +11,11 @@ Oyun, labirent içinde farenin peynire ulaşmasını amaçlar.
 
 ## Ekran Görüntüleri
 
-* Bilgisayar
+[Oyuncu]
 
 ![Ekran Görüntüsü (36)](https://user-images.githubusercontent.com/48556212/71690763-b1e39000-2db6-11ea-938b-b8f93d28edf1.png)
 
-* Oyuncu
+[Bilgisayar]
 ![Ekran Görüntüsü (36)](https://user-images.githubusercontent.com/48556212/71690770-b60fad80-2db6-11ea-8522-1cd6c18f4159.png)
 
 
